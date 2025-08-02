@@ -4,11 +4,11 @@ export default function TopBar({ onLogin, onRegister }) {
   return (
     <AppBar
       position="fixed"
-      sx={{ zIndex: (theme) => theme.zIndex.drawer - 1 }}
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       
     >
       <Toolbar>
-        <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 550}}>
+        <Typography justifySelf={'flex-start'} variant="h5" sx={{ flexGrow: 1, fontWeight: 550}}>
           Students Performance Anayltics Platform
         </Typography>
         <Box display={'flex'} gap={2}>

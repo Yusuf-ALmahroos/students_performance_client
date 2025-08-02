@@ -9,9 +9,12 @@ import {
   useMediaQuery,
   Button
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const navBarOptions = ['Profile','Dashboard', 'Students']
 const Nav = () => {
+  const navigate = useNavigate();
+
   return (
     <Drawer
       variant="permanent"
@@ -28,8 +31,13 @@ const Nav = () => {
       <Toolbar />
       <List>
         {navBarOptions.map((text) => (
-          <ListItem>
-            <Button sx={{fontWeight: 600}} variant='text' color="white">{text}</Button>
+          <ListItem key={text}>
+            <Button 
+              sx={{fontWeight: 600}} 
+              variant='text' 
+              color="white"
+              onClick={() => {navigate(`/${text.toLocaleLowerCase()}`)}}
+            >{text}</Button>
           </ListItem>
         ))}
       </List>

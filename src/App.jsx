@@ -3,6 +3,7 @@ import './App.css'
 import { Routes, Route } from "react-router-dom";
 import Nav from './components/Nav';
 import TopBar from './components/TopBar';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
       <TopBar />
       <Nav />
       <Routes>
-        <Route />
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </>
   )
