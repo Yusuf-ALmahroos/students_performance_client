@@ -42,8 +42,15 @@ export default function Nav({ onLogin, onRegister }) {
           </Box>
 
         <Box display={'flex'} gap={2} flex={0.5}>
-          <Button sx={{fontWeight: 550, width: '90px', height: '45px'}} variant='contained' color="warning" onClick={onRegister}>Register</Button>
-          <Button sx={{fontWeight: 550, width: '90px', height: '45px'}} variant='contained' color="warning" onClick={onLogin}>Login</Button>
+          <Button 
+            sx={{fontWeight: 550, 
+            width: '180px', height: '45px'}} 
+            variant='contained'
+            color="warning"
+            onClick={() => navigate('/auth')}
+          >
+            Register / Login
+          </Button>
         </Box>
       </Box>
     </AppBar>

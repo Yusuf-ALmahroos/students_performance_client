@@ -49,7 +49,7 @@ const Dashboard = ({user}) => {
       gap: 5,
     }}>
       {
-        (user.role !== 'teacher' ? <CircularProgress size={200}/> : 
+        (false ? <CircularProgress size={200}/> : 
           <>
             <Box 
               flex={1} 

@@ -1,4 +1,5 @@
 import Client from './api'
+import { jwtDecode } from 'jwt-decode'
 
 export const registerUser = async (data) => {
   try {
@@ -19,12 +20,19 @@ export const logInUser = async (data) => {
   }
 }
 
-export const checkSession = async () => {
+export const checkSession = () => {
   try {
-    // Checks if the current token if it exists is valid
-    const res = await Client.get('/auth/session/')
-    return res.data
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) return null; // no session
+
+    const { exp } = jwtDecode(accessToken); // decode expiry (exp is in seconds)
+    if (Date.now() >= exp * 1000) {
+      return null; // or trigger logout / login
+    }
+
+    return { accessToken };
   } catch (error) {
-    console.error(error.message)
+    console.error('Invalid token or decode error', error);
+    return null;
   }
-}
+};
