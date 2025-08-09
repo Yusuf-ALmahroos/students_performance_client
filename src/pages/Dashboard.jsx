@@ -10,7 +10,7 @@ import {
 } from "@mui/material"
 import PageContainer from "../components/PageContainer"
 import DataCard from "../components/DataCard"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import BarChartCard from "../components/BarChartCard"
 
 
@@ -32,14 +32,17 @@ const students = [
   {label: 'Ahmed', id: 2},
   {label: 'Hassan', id: 3},
 ]
-const Dashboard = () => {
+const Dashboard = ({user}) => {
   const [student, setStudent] = useState(null);
+  const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
-  const [user, setUser] = useState({role: 'teacher'})
-  const handleAutoCompleteChange = (_, value) => {
-    setStudent(value)
-  }
 
+  useEffect(() => {
+    setIsLoading(false)
+    //fetch user Data
+    
+    return () => {}
+  }, [])
   return (
     <PageContainer sx={{
       display: 'flex',
@@ -54,18 +57,25 @@ const Dashboard = () => {
               flexDirection={'column'} 
               gap={2} 
               width={'20vw'}
+              height={'60vh'}
+              position={'sticky'}
+              top={120}
+              overflow={'auto'}
+              boxShadow={5}
+              borderRadius={5}
+              padding={2}
+              bgcolor={'white'}
             >
               <Typography>Courses List</Typography>
-              {coursesList.map((course) => (
-                <Button 
-                  variant="contained" 
-                  color="warning" 
-                  key={course.id}
-
-                >
-                  {course.title}
-                </Button>
-              ))}
+              <Autocomplete 
+                disablePortal
+                options={coursesList.map(item => ({label: item.title}))}
+                value={course}
+                renderInput={(params) => <TextField 
+                  color="secondary"
+                  {...params} label="Courses" />}
+                onChange={(_, value) => {setCourse(value)}}
+              />
               <Divider/>
               <Typography>Students List</Typography>
               <Autocomplete 
@@ -75,12 +85,12 @@ const Dashboard = () => {
                 renderInput={(params) => <TextField 
                   color="secondary"
                   {...params} label="Students" />}
-                onChange={handleAutoCompleteChange}
+                onChange={(_, value) => {setStudent(value)}}
               />
             </Box>
-            {isLoading ? <Box width={'calc(100% - 20vw)'} display={'flex'} justifyContent={'center'}> <CircularProgress size={200}/> </Box> : 
+            {isLoading ? <Box mt={'200px'} width={'calc(100% - 20vw)'} display={'flex'} justifyContent={'center'}> <CircularProgress size={200}/> </Box> : 
               <Grid container width={'calc(100% - 20vw)'} gap={5} flex={4}>
-                <Grid size={12} boxShadow={15} bgcolor={"white"} borderRadius={5}>
+                <Grid size={12} boxShadow={5} bgcolor={"white"} borderRadius={5}>
                   <Box
                     display={'flex'}
                     gap={2}
@@ -106,10 +116,35 @@ const Dashboard = () => {
                   />
                 </Grid>
                   
-                <Grid size={{xs: 6, sm: 6, md: 4, lg: 4}}>
-                  <Box>
-                  </Box>
-                </Grid>
+                {
+                  (!course ? 
+                    <Grid size={12}>
+                      <Box 
+                        display={'flex'} 
+                        justifyContent={'center'}
+                        bgcolor={'white'}
+                        boxShadow={5}
+                        padding={2}
+                        borderRadius={5}
+                      >
+                        <Typography fontWeight={550} variant="h5">Select A Course to Show Detailes</Typography>
+                      </Box>
+                    </Grid> 
+                    :  
+                    <Grid size={12}>
+                      <BarChartCard 
+                        sx={{width:'100%'}}
+                        title={'All Courses Avg Grades'}
+                        xaxisOptions={coursesList.map((course) => course.title)}
+                        dataSets={[
+                          { data: [90, 86, 93] },
+                        ]}
+                        colors={['red', 'blue', 'yellow']}
+                      />
+                    </Grid>
+                  )
+                }
+
               </Grid>
             }
           </>

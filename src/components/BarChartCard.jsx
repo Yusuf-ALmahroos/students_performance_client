@@ -8,7 +8,7 @@ const BarChartCard = ({sx, title, xaxisOptions, dataSets, colors}) => {
       flexDirection={'column'}
       alignItems={'center'}
       justifyContent={'space-evenly'}
-      boxShadow={10}
+      boxShadow={5}
       bgcolor={'white'}
       borderRadius={10}
       sx={{...sx}}
@@ -22,6 +22,7 @@ const BarChartCard = ({sx, title, xaxisOptions, dataSets, colors}) => {
         type='bar'
         series={dataSets}
         width={800}
+        
         options={{
           chart: {
             type: 'bar',
