@@ -1,48 +1,51 @@
-import {
-  Drawer,
-  Toolbar,
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Box, 
+  Button,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  useTheme,
-  useMediaQuery,
-  Button
+  ListItem
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const navBarOptions = ['Profile','Dashboard', 'Students']
-const Nav = () => {
-  const navigate = useNavigate();
 
+const navBarOptions = ['Home','Profile','Dashboard', 'Students']
+
+export default function Nav({ onLogin, onRegister }) {
+  const navigate = useNavigate();
   return (
-    <Drawer
-      variant="permanent"
-      open
-      sx={{
-        "& .MuiDrawer-paper": {
-          width: 120,
-          boxSizing: 'border-box',
-          bgcolor: 'primary.main',
-          color: 'white',
-        }
-      }}
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      
     >
-      <Toolbar />
-      <List>
-        {navBarOptions.map((text) => (
-          <ListItem key={text}>
+      <Box sx={{
+        display: 'flex', 
+        height: '70px',
+        alignItems: 'center',
+        padding: 2
+        }}>
+        <Typography justifySelf={'flex-start'} variant="h5" sx={{fontWeight: 550}} flex={1}>
+          Students Performance Anayltics Platform
+        </Typography>
+          <Box flex={1} display={'flex'} gap={1}>
+          {navBarOptions.map((text) => (
             <Button 
-              sx={{fontWeight: 600}} 
+              key={text}
+              sx={{fontWeight: 600, height: '45px'}} 
               variant='text' 
               color="white"
               onClick={() => {navigate(`/${text.toLocaleLowerCase()}`)}}
             >{text}</Button>
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
-  )
-}
+          ))}
+          </Box>
 
-export default Nav
+        <Box display={'flex'} gap={2} flex={0.5}>
+          <Button sx={{fontWeight: 550, width: '90px', height: '45px'}} variant='contained' color="warning" onClick={onRegister}>Register</Button>
+          <Button sx={{fontWeight: 550, width: '90px', height: '45px'}} variant='contained' color="warning" onClick={onLogin}>Login</Button>
+        </Box>
+      </Box>
+    </AppBar>
+  );
+}

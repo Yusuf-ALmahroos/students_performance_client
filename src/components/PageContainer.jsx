@@ -4,8 +4,7 @@ const PageContainer = ({sx, children}) => {
   return (
     <Box
       display={'flex'}
-      marginLeft={'80px'}
-      marginTop={'60px'}
+      marginTop={'90px'}
       sx={sx}
     >
       {children}
