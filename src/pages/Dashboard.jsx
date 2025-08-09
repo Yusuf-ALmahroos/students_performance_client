@@ -9,9 +9,9 @@ import {
   CircularProgress
 } from "@mui/material"
 import PageContainer from "../components/PageContainer"
-import { BarChart, PieChart } from "@mui/x-charts"
 import DataCard from "../components/DataCard"
 import { useState } from "react"
+import BarChartCard from "../components/BarChartCard"
 
 
 const cardsValues = [
@@ -94,32 +94,20 @@ const Dashboard = () => {
                   </Box>
                 </Grid>
                   
-                <Grid size={{xs: 12, sm: 12, md: 6, lg: 6}}>
-                  <Box width={'100%'} >
-                    <BarChart
-                      xAxis={[{ data: ['Midterm', 'Assessments', 'Final'] }]}
-                      series={[{ data: [4, 5, 5] }]}
-                      height={300} 
-                    />
-                  </Box>
-                  
+                <Grid size={{xs: 12, sm: 12, md: 12, lg: 12}}>
+                  <BarChartCard 
+                    sx={{width:'100%'}}
+                    title={'All Courses Avg Grades'}
+                    xaxisOptions={coursesList.map((course) => course.title)}
+                    dataSets={[
+                      { data: [90, 86, 93] },
+                    ]}
+                    colors={['red', 'blue', 'yellow']}
+                  />
                 </Grid>
                   
                 <Grid size={{xs: 6, sm: 6, md: 4, lg: 4}}>
                   <Box>
-                    <PieChart
-                      series={[
-                        {
-                          data: [
-                            { id: 0, value: 10, label: 'series A' },
-                            { id: 1, value: 15, label: 'series B' },
-                            { id: 2, value: 20, label: 'series C' },
-                          ],
-                        },
-                      ]}
-                      width={200}
-                      height={200}
-                    />
                   </Box>
                 </Grid>
               </Grid>
