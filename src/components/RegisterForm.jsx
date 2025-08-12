@@ -7,9 +7,10 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Autocomplete,
  } from '@mui/material';
 import { useState } from 'react';
+import { formatRegisterUser } from '../../services/api-format';
+import { registerUser } from '../../services/auth';
 
 const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess }) => {
   const initialState = {
@@ -23,8 +24,18 @@ const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess }) => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("");
 
-  const handleRegister = () => {
-    onRegisterSuccess();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      if(formData.password !== formData.confirmPassword) return 
+      await registerUser('auth/register/', formatRegisterUser(formData));
+      setError("");
+      onRegisterSuccess();
+    } catch (error) {
+      console.log(error)
+      setError("Failed to register user", `${error.status ?? ""}`)
+    }
+   
   };
 
   const handleInputChange = (e) => {
@@ -85,13 +96,13 @@ const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess }) => {
         </Select>
       </FormControl>
 
-      <Button onClick={handleRegister} variant="contained" color='warning' sx={{ mt: 2 }}>
+      <Button onClick={handleFormSubmit} variant="contained" color='warning' sx={{ mt: 2 }}>
         Register
       </Button>
       <Button onClick={onSwitchToLogin} sx={{ mt: 1 }}>
         Back to Login
       </Button>
-      {(
+      {((
         (formData.password && formData.confirmPassword) &&
         (formData.password !== formData.confirmPassword)
         ) && 
@@ -101,7 +112,9 @@ const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess }) => {
           mt={2}
         >
           {"Password and Confirm Password must match"}
-        </Typography>
+        </Typography>) || (
+          <Typography variant='body2' color='error' mt={2}>{error}</Typography>
+        )
       }
 
     </Box>

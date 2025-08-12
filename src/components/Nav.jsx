@@ -1,19 +1,38 @@
 import { 
   AppBar, 
-  Toolbar, 
   Typography, 
   Box, 
   Button,
-  List,
-  ListItem
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { logOutUser } from '../../services/auth';
+import { useContext } from 'react';
+import { mainContext } from '../App';
 
 
 const navBarOptions = ['Home','Profile','Dashboard', 'Students']
 
-export default function Nav({ onLogin, onRegister }) {
+const Nav = () => {
+  const {user, setUser} = useContext(mainContext)
   const navigate = useNavigate();
+  const permissionsOptions = navBarOptions.map((item) => (
+    {
+      title: item,
+      isAllowed: (item === 'Home') ? true : (
+        user ? true : false
+      )
+    }
+  ))
+  console.log(permissionsOptions)
+  const handleLogout = () => {
+    logOutUser().then(() => {
+      setUser(null)
+      navigate('/')
+    })
+
+  }
+
+
   return (
     <AppBar
       position="fixed"
@@ -30,29 +49,46 @@ export default function Nav({ onLogin, onRegister }) {
           Students Performance Anayltics Platform
         </Typography>
           <Box flex={1} display={'flex'} gap={1}>
-          {navBarOptions.map((text) => (
-            <Button 
-              key={text}
-              sx={{fontWeight: 600, height: '45px'}} 
-              variant='text' 
-              color="white"
-              onClick={() => {navigate(`/${text.toLocaleLowerCase()}`)}}
-            >{text}</Button>
+          {permissionsOptions.map((item) => (
+            (item.isAllowed) && (
+              <Button 
+                key={item.title}
+                sx={{fontWeight: 600, height: '45px'}} 
+                variant='text' 
+                color="white"
+                onClick={() => {navigate(`/${item.title.toLocaleLowerCase()}`)}}
+              >{item.title}</Button>
+            )
           ))}
           </Box>
 
         <Box display={'flex'} gap={2} flex={0.5}>
-          <Button 
-            sx={{fontWeight: 550, 
-            width: '180px', height: '45px'}} 
-            variant='contained'
-            color="warning"
-            onClick={() => navigate('/auth')}
-          >
-            Register / Login
-          </Button>
+          {(user) ? (
+            <Button 
+              sx={{fontWeight: 550, 
+              width: '180px', height: '45px'}} 
+              variant='contained'
+              color="warning"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button 
+              sx={{fontWeight: 550, 
+              width: '180px', height: '45px'}} 
+              variant='contained'
+              color="warning"
+              onClick={() => navigate('/auth')}
+            >
+              Register / Login
+            </Button>
+          )}
+
         </Box>
       </Box>
     </AppBar>
   );
 }
+
+export default Nav;

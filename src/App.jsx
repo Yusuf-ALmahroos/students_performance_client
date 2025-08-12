@@ -1,4 +1,4 @@
-import { useState,  useEffect } from 'react'
+import { useState,  useEffect, createContext } from 'react'
 import './App.css'
 import { Routes, Route } from "react-router-dom";
 import Nav from './components/Nav';
@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 
 import { checkSession } from "../services/auth";
+
+export const mainContext = createContext()
 
 function App() {
   const [user, setUser] = useState(null);
@@ -24,7 +26,7 @@ function App() {
     return () => {}
   }, [])
   return (
-    <>
+    <mainContext.Provider value={{user, setUser}}>
       <Nav />
       <Routes>
         <Route path='/auth' element={<Auth />}/>
@@ -32,7 +34,7 @@ function App() {
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/dashboard' element={<Dashboard user={user}/>}/>
       </Routes>
-    </>
+    </mainContext.Provider>
   )
 }
 
