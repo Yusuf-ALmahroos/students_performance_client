@@ -7,7 +7,12 @@ import {
   Button
 } from '@mui/material'
 
+import { mainContext } from "../App"
+import { useContext } from "react"
+
 const Profile = () => {
+  const {user} = useContext(mainContext);
+
   return (
     <PageContainer sx={{
       display: 'flex',
@@ -20,7 +25,7 @@ const Profile = () => {
             variant="h5" 
             alignSelf={'center'}
             sx={{fontWeight: 600}}
-          >Student Name / Teacher name role dependent</Typography>
+          >Welcome to your profile {user.username}</Typography>
         </Grid>
         <Grid size={12} >
           <Box 
@@ -35,13 +40,11 @@ const Profile = () => {
             padding={5}
           >
             <Box>
-              <Typography>Name</Typography>
-              <Typography>Role</Typography>
-              <Typography>Courses / enrolled courses</Typography>
+              <Typography>Name: {user.username}</Typography>
+              <Typography>Role: {user.role}</Typography>
             </Box>
             <Box display={'flex'} gap={2}>
-              <Button variant='contained' color='warning' >Update Password</Button>
-              <Button variant='contained' color='warning' >Update Profile Settings</Button>
+              <Button variant='contained' color='warning'>Update Password</Button>
             </Box>
           </Box>
         </Grid>

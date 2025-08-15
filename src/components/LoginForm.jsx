@@ -3,6 +3,7 @@ import { mainContext } from '../App';
 import { useContext, useState } from 'react';
 import Client from '../../services/api';
 import { logInUser } from '../../services/auth';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   email: '',
@@ -11,8 +12,9 @@ const initialState = {
 const LoginForm = ({ onSwitchToRegister }) => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("")
-
   const {setUser} = useContext(mainContext);
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) =>  {
     setFormData(prev => ({...prev, [e.target.name]: e.target.value}))
@@ -21,9 +23,10 @@ const LoginForm = ({ onSwitchToRegister }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await logInUser('auth/login/', formData);
+      const user = await logInUser(formData);
       setUser(user)
       setError("");
+      navigate('/')
     } catch (error) {
       console.log(error)
       setError("Error in Login")

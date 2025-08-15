@@ -1,6 +1,6 @@
 import { useState,  useEffect, createContext } from 'react'
 import './App.css'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate} from "react-router-dom";
 import Nav from './components/Nav';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
@@ -9,6 +9,13 @@ import Auth from './pages/Auth';
 
 import { checkSession } from "../services/auth";
 
+const ProtectedRoute = ({user}) => {
+ if (!user) {
+    return <Navigate to="/" replace />;
+  }
+  return <Outlet />;
+}
+
 export const mainContext = createContext()
 
 function App() {
@@ -16,7 +23,6 @@ function App() {
 
   const checkToken = () => {
     const sessionUser = checkSession();
-    console.log(sessionUser)
     setUser(sessionUser);
   }
 
@@ -29,10 +35,13 @@ function App() {
     <mainContext.Provider value={{user, setUser}}>
       <Nav />
       <Routes>
+        <Route path='/'  element={<Home />}/>
         <Route path='/auth' element={<Auth />}/>
-        <Route path='/' element={<Home />}/>
-        <Route path='/profile' element={<Profile/>}/>
-        <Route path='/dashboard' element={<Dashboard user={user}/>}/>
+        <Route element={<ProtectedRoute user={user}/>}>
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/dashboard' element={<Dashboard user={user}/>}/>
+        </Route>
+
       </Routes>
     </mainContext.Provider>
   )

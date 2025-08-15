@@ -6,33 +6,37 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { logOutUser } from '../../services/auth';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { mainContext } from '../App';
 
-
-const navBarOptions = ['Home','Profile','Dashboard', 'Students']
+const HOME = '/'
+const PROFILE = '/profile'
+const DASHBOARD = '/dashboard'
 
 const Nav = () => {
   const {user, setUser} = useContext(mainContext)
+  const [current, setCurrent] = useState(HOME)
+
   const navigate = useNavigate();
-  const permissionsOptions = navBarOptions.map((item) => (
-    {
-      title: item,
-      isAllowed: (item === 'Home') ? true : (
-        user ? true : false
-      )
-    }
-  ))
-  console.log(permissionsOptions)
   const handleLogout = () => {
     logOutUser().then(() => {
       setUser(null)
       navigate('/')
     })
-
+  }
+  useEffect(() => {if(!user) setCurrent(HOME)}, [user])
+    
+  const navBtnSx = {
+    fontWeight: 550, 
+    width: 'fit-content',
+    height: '45px',
+    px: 2
   }
 
-
+  const handleClick = (route) => {
+    setCurrent(route)
+    navigate(route)
+  }
   return (
     <AppBar
       position="fixed"
@@ -45,21 +49,29 @@ const Nav = () => {
         alignItems: 'center',
         padding: 2
         }}>
-        <Typography justifySelf={'flex-start'} variant="h5" sx={{fontWeight: 550}} flex={1}>
+        <Typography justifySelf={'flex-start'} variant="h5" sx={{fontWeight: 550}} flex={1.5}>
           Students Performance Anayltics Platform
         </Typography>
-          <Box flex={1} display={'flex'} gap={1}>
-          {permissionsOptions.map((item) => (
-            (item.isAllowed) && (
-              <Button 
-                key={item.title}
-                sx={{fontWeight: 600, height: '45px'}} 
-                variant='text' 
-                color="white"
-                onClick={() => {navigate(`/${item.title.toLocaleLowerCase()}`)}}
-              >{item.title}</Button>
-            )
-          ))}
+          <Box flex={1.5} display={'flex'} gap={1}>
+            <Button 
+              sx={navBtnSx} 
+              variant={current === HOME ? 'contained' :'text'}  
+              color={current === HOME ? "warning" : "white"} 
+              onClick = {(() => handleClick(HOME))}>Home</Button>
+            {(user) &&
+              <>
+                <Button 
+                sx={navBtnSx}
+                variant={current === PROFILE ? 'contained' :'text'} 
+                color={current === PROFILE ? "warning" : "white"}  
+                onClick = {(() => handleClick(PROFILE))}>Profile</Button>
+                <Button 
+                  sx={navBtnSx} 
+                  variant={current === DASHBOARD ? 'contained' :'text'} 
+                  color={current === DASHBOARD ? "warning" : "white"}  
+                  onClick = {(() => handleClick(DASHBOARD))}>Dashboard</Button>
+              </>
+            }
           </Box>
 
         <Box display={'flex'} gap={2} flex={0.5}>

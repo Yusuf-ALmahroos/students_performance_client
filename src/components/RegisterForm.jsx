@@ -28,7 +28,7 @@ const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess }) => {
     e.preventDefault()
     try {
       if(formData.password !== formData.confirmPassword) return 
-      await registerUser('auth/register/', formatRegisterUser(formData));
+      await registerUser(formatRegisterUser(formData));
       setError("");
       onRegisterSuccess();
     } catch (error) {
