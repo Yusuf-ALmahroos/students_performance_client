@@ -19,8 +19,6 @@ import TeacherDashboard from "../components/TeacherDashboard"
 import StudentDashboard from "../components/StudentDashboard"
 
 const Dashboard = ({user}) => {
-  const [student, setStudent] = useState(null);
-  const [course, setCourse] = useState(null);
   const [teacherCourses, setTeacherCourses] = useState([]);
   const [studentCourses, setStudentCourses] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -63,7 +61,7 @@ const Dashboard = ({user}) => {
         (isLoading ? <CircularProgress size={200}/> : 
           <>
             {(user && user.role === 'teacher') && <TeacherDashboard data={dashboardTeacherData} isLoading={isLoading} />}
-            {(user && user.role === 'student') && <StudentDashboard data={dashboardTeacherData} isLoading={isLoading} />}
+            {(user && user.role === 'student') && <StudentDashboard data={studentCourses} isLoading={isLoading} />}
           </>
       )}
     </PageContainer>

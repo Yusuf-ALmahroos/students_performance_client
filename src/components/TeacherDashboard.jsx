@@ -12,7 +12,6 @@ import BarChartCard from './BarChartCard'
 import DataCard from './DataCard'
 import { useEffect, useState } from 'react'
 import DashboardTable from './DashboardTable'
-import BarChartCardMultiple from './BarChartCardMultiple'
 
 const TeacherDashboard = ({data, isLoading}) => {
   const [course, setCourse] = useState(null);
