@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 
 import { checkSession } from "../services/auth";
+import AddCourseForm from './components/AddCourseForm';
 
 const ProtectedRoute = ({user}) => {
  if (!user) {
@@ -40,6 +41,7 @@ function App() {
         <Route element={<ProtectedRoute user={user}/>}>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/dashboard' element={<Dashboard user={user}/>}/>
+          <Route path='/profile/add-course' element={<AddCourseForm />}/>
         </Route>
 
       </Routes>

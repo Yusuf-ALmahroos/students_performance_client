@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import ReactApexChart from 'react-apexcharts'
 
-const BarChartCard = ({sx, title, xaxisOptions, dataSets, colors}) => {
+const BarChartCardMultiple = ({sx, title, dataSets}) => {
   return (
     <Box
       display={'flex'}
@@ -52,7 +52,6 @@ const BarChartCard = ({sx, title, xaxisOptions, dataSets, colors}) => {
             show: true
           },
           xaxis: {
-            categories: xaxisOptions,
             labels: {
               style: {
                 colors: 'black',
@@ -66,4 +65,4 @@ const BarChartCard = ({sx, title, xaxisOptions, dataSets, colors}) => {
   )
 }
 
-export default BarChartCard
+export default BarChartCardMultiple
