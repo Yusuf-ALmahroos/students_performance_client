@@ -23,35 +23,39 @@ const Dashboard = ({user}) => {
   const [studentCourses, setStudentCourses] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const dashboardTeacherData = useMemo(() => {
-    if(user.role !== 'teacher') return null;
-    if(!teacherCourses) return null;
-
-    const coursesData = teacherCourses.map(course => calcCourseMetrics(course));
-    const overallData = calcOverallMetrics(teacherCourses);
-
-    return { coursesData, overallData };
-  }, [teacherCourses])
-
   useEffect(() => {
     if(!user) return 
     const fetchUserData = async () => {
       if(user.role === 'teacher'){
-        const courses = await getTeacherCourses();
-        setTeacherCourses(courses?.length !== 0 ? courses : [])
-        console.log(courses)
+        getTeacherCourses()
+        .then((courses) => {
+          setTeacherCourses(courses?.length !== 0 ? courses : [])
+          setIsLoading(false)
+        })
+        .catch((err) => setIsLoading(true))
       }
       else if(user.role === 'student') {
-        const courses = await getStudentCourses();
-        setStudentCourses(courses)
+        getStudentCourses()
+        .then((courses) => {
+          setStudentCourses(courses)
+          setIsLoading(false)
+        })
       }
-      setIsLoading(false)
     }
     fetchUserData();
     return () => {}
   }, [])
 
+  const dashboardTeacherData = useMemo(() => {
+    if(isLoading) return null;
+    if(!teacherCourses) return null;
+   
+    const coursesData = teacherCourses.map(course => calcCourseMetrics(course));
+    const overallData = calcOverallMetrics(teacherCourses);
 
+    return { coursesData, overallData };
+  }, [teacherCourses])
+  
   return (
     <PageContainer sx={{
       display: 'flex',
