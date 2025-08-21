@@ -1,12 +1,27 @@
-# React + Vite
+# Student Performance Analytics Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web-based analytics platform built with Django REST Framework (backend) and React.js (frontend).  
+It provides insights into student performance with role-based access for teachers and students.
 
-Currently, two official plugins are available:
+## 🚀 Features
+- Role-based Registration
+  - Teachers and students can register with separate roles.
+- Teacher Dashboard
+  - Add courses, manage students, and upload student records via CSV.
+  - View analytics on:
+    - Overall metrics
+    - Course-level performance
+    - Individual student records
+- Student Dashboard
+  - Students can view their own performance data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **Backend**: Django REST Framework
+- **Frontend**: React.js, MUI for styling
+- **Database**: (PostgreSQL)
 
-## Expanding the ESLint configuration
+deployed frontend: https://students-performance-client.vercel.app/
+deployed server: https://studentsperformanceserver-production.up.railway.app/api/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+backend repository: https://github.com/Yusuf-ALmahroos/students_performance_server
+
