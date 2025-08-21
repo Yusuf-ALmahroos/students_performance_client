@@ -3,16 +3,16 @@
 ## 📸 Screenshots
 
 ### Dashboard
-![Overall Metrics](assets/overall metrics.png)
+![Overall Metrics](assets/overallmetrics.png)
 
-![Course Metrics](assets/course_metrics.png)
+![Course Metrics](assets/coursemetrics.png)
 
-![Student TYable](assets/students table.png)
+![Student TYable](assets/studentstable.png)
 
 ### Rest
-![Registeration form](assets/register form.png)
+![Registeration form](assets/registerform.png)
 
-![Add Course Form](assets/add coourse form.png)
+![Add Course Form](assets/Addcourseform.png)
 
 ![ERD](assets/ERD.png)
 
