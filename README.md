@@ -1,5 +1,21 @@
 # Student Performance Analytics Platform
 
+## 📸 Screenshots
+
+### Dashboard
+![Overall Metrics](assets/overall metrics.png)
+
+![Course Metrics](assets/course_metrics.png)
+
+![Student TYable](assets/students table.png)
+
+### Rest
+![Registeration form](assets/register form.png)
+
+![Add Course Form](assets/add coourse form.png)
+
+![ERD](assets/ERD.png)
+
 A web-based analytics platform built with Django REST Framework (backend) and React.js (frontend).  
 It provides insights into student performance with role-based access for teachers and students.
 
